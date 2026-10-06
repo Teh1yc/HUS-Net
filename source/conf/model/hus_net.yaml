@@ -1,0 +1,19 @@
+name: HUS_Net
+data_creation: hus_net
+
+K_neigs: 40 
+num_layers: 1
+hidden_size: 64  
+dropout: 0.40 # 0.25  375 0.40 0.425 0.50   
+r: 0.60
+evidence_weight: 0.10
+num_communities: 8
+readout: linear
+
+
+
+
+
+
+
+

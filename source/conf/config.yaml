@@ -1,0 +1,41 @@
+defaults: 
+  - dataset: fc_abide2
+  - model: hus_net 
+  - optimizer: adam
+  - training: train
+
+model: 
+  model_save: False
+
+
+log_path: result
+repeat_time: 1
+
+# wandb:
+is_wandb: True
+# doing_sweep: True
+project: icassp
+entity: mehular0ra
+# sweep_id: asd-graph/asd-graph/r49h4avh
+
+
+
+hydra:
+  job_logging:
+    root:
+      handlers: [console, file]
+      propagate: true
+    formatters:
+      precise:
+        format: '[%(asctime)s][%(filename)s][L%(lineno)d][%(levelname)s]%(message)s'
+        datefmt: '%Y-%m-%d %H:%M:%S'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: precise
+        stream: ext://sys.stdout
+      file:
+        class: logging.FileHandler
+        formatter: precise
+        filename: ./output.log
+
