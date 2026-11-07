@@ -66,9 +66,7 @@ class LearnableCommunityEnhancer(nn.Module):
     
     def compute_adaptive_weights(self, node_features, membership):
         comm_importance = torch.sigmoid(self.community_importance)
-        
-        # To be supplemented ...
-        
+               
         return weighted_membership, node_weight, comm_importance
     
     def forward(self, node_features, batch, epoch=None):
@@ -94,7 +92,6 @@ class LearnableCommunityEnhancer(nn.Module):
             aggregated_community = community_contrib.sum(dim=1)
             
             if self.use_gate:
-                # To be supplemented ...
                 enhanced = gate * aggregated_community + (1 - gate) * graph_nodes
             else:
                 enhanced = graph_nodes + aggregated_community
@@ -223,7 +220,6 @@ class HUS_Net(torch.nn.Module):
         batch = data.batch
         labels = data.y
 
-        # 超图卷积
         for i in range(self.num_layers):
             x = self.convs[i](x, hyperedge_index, hyperedge_weight)
             x = F.leaky_relu(x)
@@ -231,12 +227,12 @@ class HUS_Net(torch.nn.Module):
 
         original_features = x
 
-        # ===== USBM + BM-FA =====
+
         enhanced_features, weighted_membership, info = self.community_enhancer(
             x, batch
         )
 
-        # ===== U-DFS =====
+
         output_features, mask, evidence_info = self.evidential_selection(
             original_features, enhanced_features
         )
@@ -260,8 +256,6 @@ class HUS_Net(torch.nn.Module):
 
         loss = self.loss_function(logits, labels, evidence_info)
 
-        if test_phase:
-            return logits, loss, {'evidence_info': evidence_info}
         return logits, loss
 
 

@@ -18,17 +18,17 @@ from .hypergraph_generation import (
 
 
 
-# HC-IAHI
-def hierarchical_hypergraph_construct(corr_matrix):   
+
+def Hybrid_hypergraph_construct(corr_matrix):   
    
-    # THIA
+    # THH
     sub_hypergraph = topologyheterogeneity_adaptive_hyperedge(corr_matrix)
 
-    # HHE
+    # HEH
     num_nodes = corr_matrix.shape[0]
     network_labels = generate_network_labels(networks_map)  
     expansion_hyperedge = generate_expansion_hyperedge(corr_matrix,network_labels)
-    # TNHE
+    # TNIH
     triple_Network_Hyperedge = triple_network_inspired_hyperedge(corr_matrix, network_labels)
     hyper_edge_sum = torch.cat((sub_hypergraph, expansion_hyperedge,triple_Network_Hyperedge), dim=1)
 
@@ -45,7 +45,7 @@ def create_hypergraph_data(cfg: DictConfig,
     for i in range(final_pearson.shape[0]):
 
         hyper_edge_index = []
-        fc_hyper_edges = hierarchical_hypergraph_construct(final_pearson[i])
+        fc_hyper_edges = Hybrid_hypergraph_construct(final_pearson[i])
         hyper_edge_index.append(fc_hyper_edges)
         hyper_edge_index = torch.cat(hyper_edge_index, dim=1)
         node_feature = final_pearson[i]
